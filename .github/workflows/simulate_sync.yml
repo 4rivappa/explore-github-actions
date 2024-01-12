@@ -1,0 +1,27 @@
+name: checking github actions
+on:
+    push
+
+jobs:
+    github-action:
+        runs-on: ubuntu-latest
+
+        steps:
+        -   name: Checkout
+            uses: actions/checkout@v2
+        -   name: step one
+            id: step-one
+            run: |
+                exit 1
+        -   name: step two
+            id: step-two
+            run: |
+                exit 0
+        -   name: step three
+            id: step-three
+            env:
+                STEP_ONE_CONCLUSION=${{ steps.step-one.conclusion }}
+                STEP_TWO_CONCLUSION=${{ steps.step-two.conclusion }}
+            run: |
+                echo "step-one:$STEP_ONE_CONCLUSION"
+                echo "step-two:$STEP_TWO_CONCLUSION"
