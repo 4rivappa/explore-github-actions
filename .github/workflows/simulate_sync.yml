@@ -20,8 +20,8 @@ jobs:
         -   name: step three
             id: step-three
             env:
-                STEP_ONE_CONCLUSION=${{ steps.step-one.conclusion }}
-                STEP_TWO_CONCLUSION=${{ steps.step-two.conclusion }}
+                STEP_ONE_CONCLUSION: ${{ steps.step-one.conclusion }}
+                STEP_TWO_CONCLUSION: ${{ steps.step-two.conclusion }}
             run: |
                 echo "step-one:$STEP_ONE_CONCLUSION"
                 echo "step-two:$STEP_TWO_CONCLUSION"
