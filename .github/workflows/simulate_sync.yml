@@ -12,7 +12,7 @@ jobs:
         -   name: step one
             id: step-one
             run: |
-                exit 1
+                exit 0
         -   name: step two
             id: step-two
             run: |
