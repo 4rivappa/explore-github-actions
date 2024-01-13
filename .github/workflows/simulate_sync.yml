@@ -9,13 +9,24 @@ jobs:
         steps:
         -   name: Checkout
             uses: actions/checkout@v2
+        -   name: track changed files
+            id: changed-files
+            uses: tj-actions/changed-files
+            with:
+                files: 'folder/**'
         -   name: step one
             id: step-one
+            env:
+                MOD_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
             run: |
-                exit 1
+                echo "DEBUG: step-one"
+                declare -p MOD_FILES
+                echo "FILES=$MOD_FILES" >> $GITHUB_OUTPUT
         -   name: step two
             id: step-two
+            if: ${{ success() && steps.changed-files.outputs.all_changed_files != '' }}
             run: |
+                echo "DEBUG: step-two"
                 exit 0
         -   name: step three
             id: step-three
@@ -23,5 +34,6 @@ jobs:
                 STEP_ONE_CONCLUSION: ${{ steps.step-one.conclusion }}
                 STEP_TWO_CONCLUSION: ${{ steps.step-two.conclusion }}
             run: |
+                echo "DEBUG: step-three"
                 echo "step-one:$STEP_ONE_CONCLUSION"
                 echo "step-two:$STEP_TWO_CONCLUSION"
